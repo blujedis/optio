@@ -1,0 +1,6 @@
+{
+  "out": "./docs",
+  "name": "optio",
+  "readme": "none",
+  "tsconfig": "./tsconfig.json"
+}

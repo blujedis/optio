@@ -1,0 +1,109 @@
+{
+  "name": "optio",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=10.x"
+  },
+  "description": "Bare bones prompt and REPL utility.",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "docs": "rimraf dist && typedoc src/index.ts && touch ./docs/.nojekyll",
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "npm run build:types && npm run build:js",
+    "build:debug": "npm run build:types:debug && npm run build:js",
+    "build:js": "rollup -c",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:types:debug": "tsc --project ./tsconfig.debug.json --emitDeclarationOnly",
+    "lint": "eslint src/**/* --fix",
+    "prerelease": "npm run build",
+    "release": "npx standard-version",
+    "postrelease": "git push --follow-tags",
+    "start": "rollup -c -w",
+    "pretest": "npm run lint",
+    "test": "jest",
+    "test:coverage": "npm run test -- --coverage",
+    "test:watch": "npm run test -- --watch --notify",
+    "types:check": "tsc --noEmit",
+    "types:watch": "npm run types:check -- --watch"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{json,md,yml}": [
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blujedis/replite.git"
+  },
+  "keywords": [
+    "copy",
+    "replite",
+    "inquirer",
+    "repl"
+  ],
+  "author": "Blujedis <blujedicorp@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blujedis/replite/issues"
+  },
+  "homepage": "https://github.com/blujedis/replite#readme",
+  "dependencies": {
+    "abort-controller": "^3.0.0",
+    "ansi-colors": "^4.1.1",
+    "figures": "^3.2.0",
+    "fs-extra": "^10.0.0",
+    "mute-stream": "^0.0.8",
+    "split-string": "^6.1.0",
+    "supports-color": "^9.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/eslint-parser": "^7.14.4",
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-typescript": "^7.9.0",
+    "@babel/runtime": "^7.14.0",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@types/fs-extra": "^9.0.11",
+    "@types/mute-stream": "^0.0.0",
+    "@types/node": "^15.6.0",
+    "@types/supports-color": "^8.1.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "husky": "^4.2.5",
+    "jest": "^25.4.0",
+    "lint-staged": "^10.1.7",
+    "log-symbols": "^5.0.0",
+    "rollup": "^2.50.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "typescript": "^4.3.2"
+  }
+}
